@@ -27,6 +27,19 @@ class MenuRepository {
         }
     }
 
+    fun updateOrderMenu(menuId: Long, newCountValue: Int): Flow<Boolean> {
+        val index = orderMenus.indexOfFirst { it.menu.id == menuId }
+        val result = if (index >= 0) {
+            val orderMenu = orderMenus[index]
+            orderMenus[index] =
+                orderMenu.copy(menu = orderMenu.menu, count = newCountValue)
+            true
+        } else {
+            false
+        }
+        return flowOf(result)
+    }
+
     companion object {
         @Volatile
         private var instance: MenuRepository? = null
