@@ -4,6 +4,7 @@ import io.github.fatimazza.mycafeapp.model.FakeMenuDataSource
 import io.github.fatimazza.mycafeapp.model.OrderMenu
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 class MenuRepository {
 
@@ -38,6 +39,15 @@ class MenuRepository {
             false
         }
         return flowOf(result)
+    }
+
+    fun getAddedOrderMenus(): Flow<List<OrderMenu>> {
+        return getAllMenus()
+            .map { orderMenus ->
+                orderMenus.filter { orderMenu ->
+                    orderMenu.count != 0
+                }
+            }
     }
 
     companion object {
