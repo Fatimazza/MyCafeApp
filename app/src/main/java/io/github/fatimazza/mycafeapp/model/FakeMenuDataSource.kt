@@ -3,7 +3,7 @@ package io.github.fatimazza.mycafeapp.model
 import io.github.fatimazza.mycafeapp.R
 
 object FakeMenuDataSource {
-    val dummyMenu = listOf(
+    val dummyMenus = listOf(
         Menu(1, R.drawable.menu_1, "Japanese Sushi", 35000),
         Menu(2, R.drawable.menu_2, "Sunny side up Toast", 15000),
         Menu(3, R.drawable.menu_3, "Veggies Pizza", 65000),
