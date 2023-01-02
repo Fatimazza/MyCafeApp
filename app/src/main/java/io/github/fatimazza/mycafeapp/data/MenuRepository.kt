@@ -2,6 +2,8 @@ package io.github.fatimazza.mycafeapp.data
 
 import io.github.fatimazza.mycafeapp.model.FakeMenuDataSource
 import io.github.fatimazza.mycafeapp.model.OrderMenu
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 class MenuRepository {
 
@@ -12,6 +14,16 @@ class MenuRepository {
             FakeMenuDataSource.dummyMenus.forEach{
                 orderMenus.add(OrderMenu(it, 0))
             }
+        }
+    }
+
+    fun getAllMenus(): Flow<List<OrderMenu>> {
+        return flowOf(orderMenus)
+    }
+
+    fun getOrderMenuById(menuId: Long): OrderMenu {
+        return orderMenus.first {
+            it.menu.id == menuId
         }
     }
 
