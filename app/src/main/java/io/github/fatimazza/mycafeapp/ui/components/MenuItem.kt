@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -25,10 +26,12 @@ import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 @Composable
 fun MenuItem(
     image: Int,
-    title: String,
+    title: Int,
     price: Int,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .wrapContentSize(Alignment.Center)
@@ -42,7 +45,7 @@ fun MenuItem(
                 .clip(RoundedCornerShape(15.dp))
         )
         Text(
-            text = title,
+            text = context.getString(title),
             textAlign = TextAlign.Center,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
@@ -65,6 +68,6 @@ fun MenuItem(
 @Preview(showBackground = true)
 fun RewardItemPreview() {
     MyCafeAppTheme {
-        MenuItem(R.drawable.menu_1, "My Cafe Menu", 10000)
+        MenuItem(R.drawable.menu_1, R.string.food_sushi, 10000)
     }
 }
