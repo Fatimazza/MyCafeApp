@@ -12,4 +12,16 @@
     <string name="back">Back</string>
     <string name="share_subject">Dicoding Reward</string>
     <string name="share_message">Hey, I have ordered %1$d menu in My Cafe App with total %2$d Rupiah. Do you want too?</string>
+    <string name="food_sushi">Japanese Sushi</string>
+    <string name="food_toast">Sunny side up Toast</string>
+    <string name="food_pizza">Veggies Pizza</string>
+    <string name="food_salad">Vegetables Salad</string>
+    <string name="food_ramen">Prawn Ramen with Egg</string>
+    <string name="food_coffee">Tiramisu Coffee</string>
+    <string name="food_doughnut">Choco Doughnut</string>
+    <string name="food_fruit">Summer Fruit Salad</string>
+    <string name="food_pancake">Very Berry Pancake</string>
+    <string name="food_choco">Hot Choco</string>
+    <string name="food_tea">Summer Tea</string>
+    <string name="food_dessert">Red Berry Dessert</string>
 </resources>
