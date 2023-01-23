@@ -1,6 +1,8 @@
 package io.github.fatimazza.mycafeapp.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -42,6 +44,10 @@ fun MenuItem(
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(170.dp)
+                .border(
+                    BorderStroke(4.dp, MaterialTheme.colors.primary),
+                    RoundedCornerShape(15.dp)
+                )
                 .clip(RoundedCornerShape(15.dp))
         )
         Text(
