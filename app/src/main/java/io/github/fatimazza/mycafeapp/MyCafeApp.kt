@@ -1,5 +1,6 @@
 package io.github.fatimazza.mycafeapp
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -9,10 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import io.github.fatimazza.mycafeapp.ui.navigation.NavigationItem
 import io.github.fatimazza.mycafeapp.ui.navigation.Screen
+import io.github.fatimazza.mycafeapp.ui.screen.cart.CartScreen
+import io.github.fatimazza.mycafeapp.ui.screen.home.HomeScreen
+import io.github.fatimazza.mycafeapp.ui.screen.profile.ProfileScreen
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 
 @Composable
@@ -26,7 +33,21 @@ fun MyCafeApp(
         },
         modifier = modifier
     ) { innerPadding ->
-        innerPadding.toString()
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Home.route,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable(Screen.Home.route) {
+                HomeScreen()
+            }
+            composable(Screen.Cart.route) {
+                CartScreen()
+            }
+            composable(Screen.Profile.route) {
+                ProfileScreen()
+            }
+        }
     }
 }
 
@@ -64,7 +85,15 @@ private fun BottomBar(
                 },
                 label = { Text(item.title) },
                 selected = true,
-                onClick = {}
+                onClick = {
+                    navController.navigate(item.screen.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        restoreState = true
+                        launchSingleTop = true
+                    }
+                }
             )
         }
     }
