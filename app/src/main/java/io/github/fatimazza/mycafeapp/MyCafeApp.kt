@@ -9,17 +9,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import io.github.fatimazza.mycafeapp.ui.navigation.NavigationItem
 import io.github.fatimazza.mycafeapp.ui.navigation.Screen
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 
 @Composable
 fun MyCafeApp(
+    navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         bottomBar = {
-            BottomBar()
+            BottomBar(navController)
         },
         modifier = modifier
     ) { innerPadding ->
@@ -29,6 +32,7 @@ fun MyCafeApp(
 
 @Composable
 private fun BottomBar(
+    navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier
 ) {
     val navigationItems = listOf(
@@ -70,6 +74,6 @@ private fun BottomBar(
 @Composable
 fun MyCafeAppPreview() {
     MyCafeAppTheme {
-        MyCafeApp()
+        MyCafeApp(rememberNavController())
     }
 }
