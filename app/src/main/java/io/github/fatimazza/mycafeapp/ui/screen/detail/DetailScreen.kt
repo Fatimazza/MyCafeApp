@@ -11,6 +11,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,7 +37,8 @@ fun DetailScreen() {
     DetailContent(
         R.drawable.menu_1,
         R.string.food_sushi,
-        15000
+        15000,
+        1
     )
 }
 
@@ -42,9 +47,13 @@ fun DetailContent(
     @DrawableRes image: Int,
     @StringRes title: Int,
     price: Int,
+    count: Int,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+
+    var totalPrice by rememberSaveable { mutableStateOf(0) }
+    var orderCount by rememberSaveable { mutableStateOf(count) }
 
     Column(modifier = modifier) {
         Column(
@@ -109,15 +118,16 @@ fun DetailContent(
             modifier = Modifier.padding(16.dp)
         ) {
             ItemCounter(
-                0,
                 1,
-                onItemIncreased = {  },
-                onItemDecreased = {  },
+                orderCount,
+                onItemIncreased = { orderCount++ },
+                onItemDecreased = { if (orderCount > 0) orderCount-- },
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 16.dp)
             )
+            totalPrice = price * orderCount
             OrderButton(
-                text = stringResource(R.string.add_to_cart, 0),
-                enabled = true,
+                text = stringResource(R.string.add_to_cart, totalPrice),
+                enabled = orderCount > 0,
                 onClick = {}
             )
         }
@@ -131,7 +141,8 @@ fun MyCafeAppPreview() {
         DetailContent(
             R.drawable.menu_1,
             R.string.food_sushi,
-            15000
+            15000,
+            1
         )
     }
 }
