@@ -13,13 +13,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import io.github.fatimazza.mycafeapp.ui.navigation.NavigationItem
 import io.github.fatimazza.mycafeapp.ui.navigation.Screen
 import io.github.fatimazza.mycafeapp.ui.screen.cart.CartScreen
+import io.github.fatimazza.mycafeapp.ui.screen.detail.DetailScreen
 import io.github.fatimazza.mycafeapp.ui.screen.home.HomeScreen
 import io.github.fatimazza.mycafeapp.ui.screen.profile.ProfileScreen
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
@@ -41,13 +44,30 @@ fun MyCafeApp(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Home.route) {
-                HomeScreen(navigateToDetail = {})
+                HomeScreen(
+                    navigateToDetail = { menuId ->
+                        navController.navigate(Screen.DetailMenu.createRoute(menuId))
+                    }
+                )
             }
             composable(Screen.Cart.route) {
                 CartScreen()
             }
             composable(Screen.Profile.route) {
                 ProfileScreen()
+            }
+            composable(
+                route = Screen.DetailMenu.route,
+                arguments = listOf(navArgument("menuId") { type = NavType.LongType }),
+            ) {
+                val id = it.arguments?.getLong("menuId") ?: -1L
+                DetailScreen(
+                    menuId = id,
+                    navigateBack = {
+                        navController.navigateUp()
+                    },
+                    navigateToCart = {}
+                )
             }
         }
     }

@@ -33,7 +33,11 @@ import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 import io.github.fatimazza.mycafeapp.R
 
 @Composable
-fun DetailScreen() {
+fun DetailScreen(
+    menuId: Long,
+    navigateBack: () -> Unit,
+    navigateToCart: () -> Unit
+) {
     DetailContent(
         R.drawable.menu_1,
         R.string.food_sushi,
