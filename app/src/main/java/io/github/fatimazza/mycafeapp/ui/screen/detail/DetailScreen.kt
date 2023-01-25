@@ -52,7 +52,8 @@ fun DetailScreen(
                     data.menu.image,
                     data.menu.title,
                     data.menu.price,
-                    data.count
+                    data.count,
+                    onBackClick = navigateBack
                 )
             }
             is UiState.Error -> {}
@@ -66,6 +67,7 @@ fun DetailContent(
     @StringRes title: Int,
     price: Int,
     count: Int,
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -98,7 +100,7 @@ fun DetailContent(
                     contentDescription = stringResource(R.string.back),
                     modifier = Modifier
                         .padding(16.dp)
-                        .clickable { }
+                        .clickable { onBackClick() }
                 )
             }
             Column(
@@ -163,7 +165,8 @@ fun MyCafeAppPreview() {
             R.drawable.menu_1,
             R.string.food_sushi,
             15000,
-            1
+            1,
+            {}
         )
     }
 }
