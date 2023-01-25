@@ -9,14 +9,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import io.github.fatimazza.mycafeapp.di.Injection
 import io.github.fatimazza.mycafeapp.model.FakeMenuDataSource
 import io.github.fatimazza.mycafeapp.model.Menu
+import io.github.fatimazza.mycafeapp.ui.ViewModelFactory
 import io.github.fatimazza.mycafeapp.ui.components.MenuItem
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepository())
+    )
 ) {
     HomeContent(
         orderMenu = FakeMenuDataSource.dummyMenus,
