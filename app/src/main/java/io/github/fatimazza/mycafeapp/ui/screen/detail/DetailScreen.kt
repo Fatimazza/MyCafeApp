@@ -27,14 +27,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.fatimazza.mycafeapp.ui.components.ItemCounter
 import io.github.fatimazza.mycafeapp.ui.components.OrderButton
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 import io.github.fatimazza.mycafeapp.R
+import io.github.fatimazza.mycafeapp.di.Injection
+import io.github.fatimazza.mycafeapp.ui.ViewModelFactory
 
 @Composable
 fun DetailScreen(
     menuId: Long,
+    viewModel: DetailViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepository())
+    ),
     navigateBack: () -> Unit,
     navigateToCart: () -> Unit
 ) {
