@@ -1,5 +1,6 @@
 package io.github.fatimazza.mycafeapp.ui.screen.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -23,7 +24,8 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(
         factory = ViewModelFactory(Injection.provideRepository())
-    )
+    ),
+    navigateToDetail: (Long) -> Unit,
 ) {
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
@@ -33,7 +35,8 @@ fun HomeScreen(
             is UiState.Success -> {
                 HomeContent(
                     orderMenu = uiState.data,
-                    modifier = modifier
+                    modifier = modifier,
+                    navigateToDetail = navigateToDetail
                 )
             }
             is UiState.Error -> {}
@@ -45,6 +48,7 @@ fun HomeScreen(
 fun HomeContent(
     orderMenu: List<OrderMenu>,
     modifier: Modifier = Modifier,
+    navigateToDetail: (Long) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(160.dp),
@@ -58,6 +62,9 @@ fun HomeContent(
                 image = data.menu.image,
                 title = data.menu.title,
                 price = data.menu.price,
+                modifier = Modifier.clickable {
+                    navigateToDetail(data.menu.id)
+                }
             )
         }
     }
@@ -67,6 +74,6 @@ fun HomeContent(
 @Composable
 fun MyCafeAppPreview() {
     MyCafeAppTheme {
-        HomeScreen()
+        HomeScreen(navigateToDetail = {})
     }
 }

@@ -41,7 +41,7 @@ fun MyCafeApp(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Home.route) {
-                HomeScreen()
+                HomeScreen(navigateToDetail = {})
             }
             composable(Screen.Cart.route) {
                 CartScreen()
