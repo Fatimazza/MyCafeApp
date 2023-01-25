@@ -72,11 +72,6 @@ fun DetailContent(
                     contentScale = ContentScale.Crop,
                     modifier = modifier.height(400.dp)
                         .fillMaxWidth()
-                        .border(
-                            BorderStroke(4.dp, MaterialTheme.colors.primary),
-                            RoundedCornerShape(
-                                bottomStart = 20.dp, bottomEnd = 20.dp)
-                        )
                         .clip(RoundedCornerShape(
                             bottomStart = 20.dp, bottomEnd = 20.dp))
                 )
@@ -100,7 +95,7 @@ fun DetailContent(
                 )
                 Text(
                     text = stringResource(R.string.item_price, price),
-                    style = MaterialTheme.typography.subtitle1.copy(
+                    style = MaterialTheme.typography.h6.copy(
                         fontWeight = FontWeight.ExtraBold
                     ),
                     color = MaterialTheme.colors.secondary
@@ -115,8 +110,8 @@ fun DetailContent(
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(4.dp)
-                .background(Color.LightGray)
+                .height(2.dp)
+                .background(MaterialTheme.colors.secondary)
         )
         Column(
             modifier = Modifier.padding(16.dp)
