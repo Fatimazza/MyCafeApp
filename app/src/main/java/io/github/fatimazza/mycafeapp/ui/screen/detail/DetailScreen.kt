@@ -53,7 +53,11 @@ fun DetailScreen(
                     data.menu.title,
                     data.menu.price,
                     data.count,
-                    onBackClick = navigateBack
+                    onBackClick = navigateBack,
+                    onAddToCart = { count ->
+                        viewModel.addToCart(data.menu, count)
+                        navigateToCart()
+                    }
                 )
             }
             is UiState.Error -> {}
@@ -68,6 +72,7 @@ fun DetailContent(
     price: Int,
     count: Int,
     onBackClick: () -> Unit,
+    onAddToCart: (count: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -151,7 +156,7 @@ fun DetailContent(
             OrderButton(
                 text = stringResource(R.string.add_to_cart, totalPrice),
                 enabled = orderCount > 0,
-                onClick = {}
+                onClick = { onAddToCart(orderCount) }
             )
         }
     }
@@ -166,6 +171,7 @@ fun MyCafeAppPreview() {
             R.string.food_sushi,
             15000,
             1,
+            {},
             {}
         )
     }
