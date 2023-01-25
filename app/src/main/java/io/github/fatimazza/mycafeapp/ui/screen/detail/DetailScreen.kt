@@ -24,13 +24,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import io.github.fatimazza.mycafeapp.ui.components.ItemCounter
-import io.github.fatimazza.mycafeapp.ui.components.OrderButton
-import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 import io.github.fatimazza.mycafeapp.R
 import io.github.fatimazza.mycafeapp.di.Injection
 import io.github.fatimazza.mycafeapp.ui.ViewModelFactory
 import io.github.fatimazza.mycafeapp.ui.common.UiState
+import io.github.fatimazza.mycafeapp.ui.components.ItemCounter
+import io.github.fatimazza.mycafeapp.ui.components.OrderButton
+import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 
 @Composable
 fun DetailScreen(
@@ -84,15 +84,21 @@ fun DetailContent(
                     painter = painterResource(image),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = modifier.height(400.dp)
+                    modifier = modifier
+                        .height(400.dp)
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(
-                            bottomStart = 20.dp, bottomEnd = 20.dp))
+                        .clip(
+                            RoundedCornerShape(
+                                bottomStart = 20.dp, bottomEnd = 20.dp
+                            )
+                        )
                 )
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = stringResource(R.string.back),
-                    modifier = Modifier.padding(16.dp).clickable { }
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .clickable { }
                 )
             }
             Column(
@@ -135,7 +141,9 @@ fun DetailContent(
                 orderCount,
                 onItemIncreased = { orderCount++ },
                 onItemDecreased = { if (orderCount > 0) orderCount-- },
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 16.dp)
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(bottom = 16.dp)
             )
             totalPrice = price * orderCount
             OrderButton(
