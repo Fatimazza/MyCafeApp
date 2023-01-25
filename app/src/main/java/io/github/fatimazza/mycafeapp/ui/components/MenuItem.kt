@@ -72,7 +72,7 @@ fun MenuItem(
 
 @Composable
 @Preview(showBackground = true)
-fun RewardItemPreview() {
+fun MenuItemPreview() {
     MyCafeAppTheme {
         MenuItem(R.drawable.menu_1, R.string.food_sushi, 10000)
     }
