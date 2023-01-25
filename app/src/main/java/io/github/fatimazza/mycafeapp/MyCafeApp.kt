@@ -32,9 +32,14 @@ fun MyCafeApp(
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier
 ) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
     Scaffold(
         bottomBar = {
-            BottomBar(navController)
+            if (currentRoute != Screen.DetailMenu.route) {
+                BottomBar(navController)
+            }
         },
         modifier = modifier
     ) { innerPadding ->
