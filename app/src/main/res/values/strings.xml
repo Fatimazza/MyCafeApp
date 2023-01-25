@@ -10,7 +10,7 @@
     <string name="add_to_cart">Add to Cart: %d Rupiah</string>
     <string name="total_order">Total Order: %d Rupiah</string>
     <string name="back">Back</string>
-    <string name="share_subject">Dicoding Reward</string>
+    <string name="share_subject">My Cafe App</string>
     <string name="share_message">Hey, I have ordered %1$d menu in My Cafe App with total %2$d Rupiah. Do you want too?</string>
     <string name="food_sushi">Japanese Sushi</string>
     <string name="food_toast">Sunny side up Toast</string>
