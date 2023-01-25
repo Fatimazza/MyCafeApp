@@ -15,13 +15,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.fatimazza.mycafeapp.R
+import io.github.fatimazza.mycafeapp.di.Injection
+import io.github.fatimazza.mycafeapp.ui.ViewModelFactory
 import io.github.fatimazza.mycafeapp.ui.components.CartItem
 import io.github.fatimazza.mycafeapp.ui.components.OrderButton
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 
 @Composable
 fun CartScreen(
+    viewModel: CartViewModel = viewModel(
+        factory = ViewModelFactory(
+            Injection.provideRepository()
+        )
+    )
 ) {
     
 }
