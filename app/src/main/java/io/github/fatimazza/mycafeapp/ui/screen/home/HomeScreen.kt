@@ -6,14 +6,15 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.fatimazza.mycafeapp.di.Injection
-import io.github.fatimazza.mycafeapp.model.FakeMenuDataSource
-import io.github.fatimazza.mycafeapp.model.Menu
+import io.github.fatimazza.mycafeapp.model.OrderMenu
 import io.github.fatimazza.mycafeapp.ui.ViewModelFactory
+import io.github.fatimazza.mycafeapp.ui.common.UiState
 import io.github.fatimazza.mycafeapp.ui.components.MenuItem
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 
@@ -24,15 +25,25 @@ fun HomeScreen(
         factory = ViewModelFactory(Injection.provideRepository())
     )
 ) {
-    HomeContent(
-        orderMenu = FakeMenuDataSource.dummyMenus,
-        modifier = modifier
-    )
+    viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+                viewModel.getAllMenus()
+            }
+            is UiState.Success -> {
+                HomeContent(
+                    orderMenu = uiState.data,
+                    modifier = modifier
+                )
+            }
+            is UiState.Error -> {}
+        }
+    }
 }
 
 @Composable
 fun HomeContent(
-    orderMenu: List<Menu>,
+    orderMenu: List<OrderMenu>,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
@@ -44,9 +55,9 @@ fun HomeContent(
     ) {
         items(orderMenu) { data ->
             MenuItem(
-                image = data.image,
-                title = data.title,
-                price = data.price,
+                image = data.menu.image,
+                title = data.menu.title,
+                price = data.menu.price,
             )
         }
     }
