@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.fatimazza.mycafeapp.R
 import io.github.fatimazza.mycafeapp.di.Injection
 import io.github.fatimazza.mycafeapp.ui.ViewModelFactory
+import io.github.fatimazza.mycafeapp.ui.common.UiState
 import io.github.fatimazza.mycafeapp.ui.components.CartItem
 import io.github.fatimazza.mycafeapp.ui.components.OrderButton
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
@@ -31,7 +33,22 @@ fun CartScreen(
         )
     )
 ) {
-    
+    viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+                viewModel.getAddedOrderMenus()
+            }
+            is UiState.Success -> {
+                CartContent(
+                    uiState.data,
+                    onItemCountChanged = { menuId, count ->
+                        viewModel.updateOrderMenu(menuId, count)
+                    },
+                )
+            }
+            is UiState.Error -> {}
+        }
+    }
 }
 
 @Composable
