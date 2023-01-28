@@ -56,7 +56,11 @@ fun MyCafeApp(
                 )
             }
             composable(Screen.Cart.route) {
-                CartScreen()
+                CartScreen(
+                    onOrderButtonClicked = { message ->
+
+                    }
+                )
             }
             composable(Screen.Profile.route) {
                 ProfileScreen()
