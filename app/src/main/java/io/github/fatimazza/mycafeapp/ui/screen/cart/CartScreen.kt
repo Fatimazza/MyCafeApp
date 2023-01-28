@@ -93,6 +93,9 @@ fun CartContent(
                     count = item.count,
                     onItemCountChanged = onItemCountChanged,
                 )
+                Spacer(
+                    modifier = modifier.height(8.dp)
+                )
                 Divider()
             }
         }
