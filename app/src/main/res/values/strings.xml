@@ -12,6 +12,7 @@
     <string name="back">Back</string>
     <string name="share_subject">My Cafe App</string>
     <string name="share_message">Hey, I have ordered %1$d menu in My Cafe App with total %2$d Rupiah. Do you want too?</string>
+    <string name="search_menu">Search menu</string>
     <string name="food_sushi">Japanese Sushi</string>
     <string name="food_toast">Sunny side up Toast</string>
     <string name="food_pizza">Veggies Pizza</string>
