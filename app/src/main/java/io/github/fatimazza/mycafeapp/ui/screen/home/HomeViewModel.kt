@@ -1,5 +1,8 @@
 package io.github.fatimazza.mycafeapp.ui.screen.home
 
+import android.content.Context
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.fatimazza.mycafeapp.data.MenuRepository
@@ -25,6 +28,22 @@ class HomeViewModel(
                 }
                 .collect { orderMenus ->
                     _uiState.value = UiState.Success(orderMenus)
+                }
+        }
+    }
+
+    private val _query = mutableStateOf("")
+    val query: State<String> get() = _query
+
+    fun searchMenu(newQuery: String, context: Context) {
+        viewModelScope.launch {
+            _query.value = newQuery
+            repository.searchMenu(_query.value, context)
+                .catch {
+                    _uiState.value = UiState.Error(it.message.toString())
+                }
+                .collect { orderMenus ->
+                    _uiState.value = UiState.Success(orderMenus.sortedBy { it.menu.id })
                 }
         }
     }

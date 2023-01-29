@@ -12,9 +12,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,7 +46,8 @@ fun HomeScreen(
                 HomeContent(
                     orderMenu = uiState.data,
                     modifier = modifier,
-                    navigateToDetail = navigateToDetail
+                    navigateToDetail = navigateToDetail,
+                    viewModel = viewModel
                 )
             }
             is UiState.Error -> {}
@@ -56,12 +59,16 @@ fun HomeScreen(
 fun HomeContent(
     orderMenu: List<OrderMenu>,
     modifier: Modifier = Modifier,
-    navigateToDetail: (Long) -> Unit
+    navigateToDetail: (Long) -> Unit,
+    viewModel: HomeViewModel,
 ) {
+    val query by viewModel.query
+    val context = LocalContext.current
+
     Column() {
         SearchBar(
-            query = "",
-            onQueryChange = {},
+            query = query,
+            onQueryChange = { viewModel.searchMenu(it, context) },
             modifier = modifier.background(MaterialTheme.colors.primary)
         )
         LazyVerticalGrid(

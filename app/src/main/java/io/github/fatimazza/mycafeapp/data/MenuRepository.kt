@@ -1,5 +1,6 @@
 package io.github.fatimazza.mycafeapp.data
 
+import android.content.Context
 import io.github.fatimazza.mycafeapp.model.FakeMenuDataSource
 import io.github.fatimazza.mycafeapp.model.OrderMenu
 import kotlinx.coroutines.flow.Flow
@@ -20,6 +21,14 @@ class MenuRepository {
 
     fun getAllMenus(): Flow<List<OrderMenu>> {
         return flowOf(orderMenus)
+    }
+
+    fun searchMenu(query: String, context: Context): Flow<List<OrderMenu>> {
+        return getAllMenus().map { orderMenus ->
+            orderMenus.filter { orderMenu ->
+                context.getString(orderMenu.menu.title).contains(query, ignoreCase = true)
+            }
+        }
     }
 
     fun getOrderMenuById(menuId: Long): OrderMenu {
