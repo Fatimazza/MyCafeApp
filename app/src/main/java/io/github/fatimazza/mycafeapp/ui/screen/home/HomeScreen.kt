@@ -65,6 +65,8 @@ fun HomeContent(
     val query by viewModel.query
     val context = LocalContext.current
 
+    viewModel.searchMenu(query, context)
+
     Column() {
         SearchBar(
             query = query,
