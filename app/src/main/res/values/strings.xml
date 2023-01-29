@@ -25,4 +25,7 @@
     <string name="food_choco">Hot Choco</string>
     <string name="food_tea">Summer Tea</string>
     <string name="food_dessert">Red Berry Dessert</string>
+    <string name="developer_desc">Developed by:</string>
+    <string name="developer_name">Fatima Azzahro</string>
+    <string name="developer_email">azzahro.fatima@gmail.com</string>
 </resources>
