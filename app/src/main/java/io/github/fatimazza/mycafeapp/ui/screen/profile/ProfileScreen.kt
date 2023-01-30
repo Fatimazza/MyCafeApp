@@ -84,6 +84,7 @@ fun ProfileScreen(
                         CircleShape
                     )
                     .clip(CircleShape)
+                    .size(220.dp)
             )
             Text(
                 text = context.getString(R.string.developer_name),
