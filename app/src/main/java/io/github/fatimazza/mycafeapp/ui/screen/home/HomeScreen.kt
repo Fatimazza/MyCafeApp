@@ -1,5 +1,6 @@
 package io.github.fatimazza.mycafeapp.ui.screen.home
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.fatimazza.mycafeapp.R
 import io.github.fatimazza.mycafeapp.di.Injection
@@ -64,6 +66,7 @@ fun HomeContent(
 ) {
     val query by viewModel.query
     val context = LocalContext.current
+    val searchNotFound by viewModel.searchNotFound
 
     viewModel.searchMenu(query, context)
 
@@ -73,6 +76,21 @@ fun HomeContent(
             onQueryChange = { viewModel.searchMenu(it, context) },
             modifier = modifier.background(MaterialTheme.colors.primary)
         )
+        AnimatedVisibility(
+            visible = searchNotFound
+        ) {
+            Row (
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.search_no_result),
+                    fontSize = 18.sp
+                )
+            }
+        }
         LazyVerticalGrid(
             columns = GridCells.Adaptive(160.dp),
             contentPadding = PaddingValues(16.dp),
