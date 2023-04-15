@@ -112,8 +112,7 @@ private fun shareOrder(context: Context, summary: String) {
 
 @Composable
 private fun BottomBar(
-    navController: NavHostController = rememberNavController(),
-    modifier: Modifier = Modifier
+    navController: NavHostController = rememberNavController()
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
