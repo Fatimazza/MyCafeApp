@@ -10,12 +10,16 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -25,9 +29,12 @@ import androidx.compose.ui.unit.sp
 import io.github.fatimazza.mycafeapp.R
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ProfileScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier.semantics {
+        testTagsAsResourceId = true
+    }
 ) {
     val context = LocalContext.current
 
@@ -39,7 +46,8 @@ fun ProfileScreen(
                 text = stringResource(R.string.menu_profile),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 12.dp),
+                    .padding(horizontal = 12.dp)
+                    .testTag("text:AboutMenu"),
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center
@@ -62,6 +70,7 @@ fun ProfileScreen(
                     fontWeight = FontWeight.Light
                 ),
                 modifier = modifier.align(Alignment.CenterHorizontally)
+                    .testTag("text:AboutAppTitle")
             )
             Text(
                 text = context.getString(R.string.developer_desc),
@@ -72,6 +81,7 @@ fun ProfileScreen(
                     fontWeight = FontWeight.Light
                 ),
                 modifier = modifier.align(Alignment.CenterHorizontally)
+                    .testTag("text:AboutDev")
             )
             Image(
                 painter = painterResource(R.drawable.menu_1),
@@ -85,6 +95,7 @@ fun ProfileScreen(
                     )
                     .clip(CircleShape)
                     .size(220.dp)
+                    .testTag("image:AboutDev")
             )
             Text(
                 text = context.getString(R.string.developer_name),
@@ -95,6 +106,7 @@ fun ProfileScreen(
                     fontWeight = FontWeight.Light
                 ),
                 modifier = modifier.align(Alignment.CenterHorizontally)
+                    .testTag("text:AboutDevName")
             )
             Text(
                 text = context.getString(R.string.developer_email),
@@ -105,6 +117,7 @@ fun ProfileScreen(
                     fontWeight = FontWeight.Light
                 ),
                 modifier = modifier.align(Alignment.CenterHorizontally)
+                    .testTag("text:AboutDevEmail")
             )
         }
     }
