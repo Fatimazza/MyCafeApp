@@ -14,11 +14,15 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,10 +61,13 @@ fun HomeScreen(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HomeContent(
     orderMenu: List<OrderMenu>,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.semantics {
+        testTagsAsResourceId = true
+    },
     navigateToDetail: (Long) -> Unit,
     viewModel: HomeViewModel,
 ) {
@@ -75,6 +82,7 @@ fun HomeContent(
             query = query,
             onQueryChange = { viewModel.searchMenu(it, context) },
             modifier = modifier.background(MaterialTheme.colors.primary)
+                .testTag("searchBar:foodHome")
         )
         AnimatedVisibility(
             visible = searchNotFound
@@ -87,7 +95,8 @@ fun HomeContent(
             ) {
                 Text(
                     text = stringResource(R.string.search_no_result),
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    modifier = modifier.testTag("text:noResultFoodHome")
                 )
             }
         }
@@ -96,7 +105,7 @@ fun HomeContent(
             contentPadding = PaddingValues(16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = modifier
+            modifier = modifier.testTag("gridList:foodHome")
         ) {
             items(orderMenu) { data ->
                 MenuItem(
