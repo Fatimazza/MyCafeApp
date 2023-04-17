@@ -7,15 +7,22 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun OrderButton(
     text: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.semantics {
+        testTagsAsResourceId = true
+    },
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
@@ -26,10 +33,12 @@ fun OrderButton(
         modifier = modifier
             .fillMaxWidth()
             .height(52.dp)
+            .testTag("button:OrderButton")
     ) {
         Text(
             text = text,
             modifier = Modifier.align(Alignment.CenterVertically)
+                .testTag("text:OrderButtonTitle")
         )
     }
 }
