@@ -8,12 +8,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,6 +26,7 @@ import io.github.fatimazza.mycafeapp.R
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 import io.github.fatimazza.mycafeapp.ui.theme.Shapes
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CartItem(
     menuId: Long,
@@ -30,7 +35,9 @@ fun CartItem(
     totalPrice: Int,
     count: Int,
     onItemCountChanged: (id: Long, count: Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier.semantics {
+        testTagsAsResourceId = true
+    }
 ) {
     val context = LocalContext.current
 
@@ -48,6 +55,7 @@ fun CartItem(
                     RoundedCornerShape(15.dp)
                 )
                 .clip(RoundedCornerShape(15.dp).also { Shapes.small })
+                .testTag("image:cartFood")
         )
         Column(
             modifier = Modifier
@@ -61,7 +69,9 @@ fun CartItem(
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.subtitle1.copy(
                     fontWeight = FontWeight.ExtraBold
-                )
+                ),
+                modifier = Modifier
+                    .testTag("text:cartFoodTitle")
             )
             Text(
                 text = stringResource(
@@ -70,6 +80,8 @@ fun CartItem(
                 ),
                 color = MaterialTheme.colors.secondary,
                 style = MaterialTheme.typography.subtitle2,
+                modifier = Modifier
+                    .testTag("text:cartFoodPrice")
             )
         }
         ItemCounter(
