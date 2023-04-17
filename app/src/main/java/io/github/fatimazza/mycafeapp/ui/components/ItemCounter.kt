@@ -12,8 +12,12 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,13 +25,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ItemCounter(
     orderId: Long,
     orderCount: Int,
     onItemIncreased: (Long) -> Unit,
     onItemDecreased: (Long) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier.semantics {
+        testTagsAsResourceId = true
+    }
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -52,12 +59,14 @@ fun ItemCounter(
                     .clickable {
                         onItemDecreased(orderId)
                     }
+                    .testTag("text:countDecreased")
             )
         }
         Text(
             text = orderCount.toString(),
             modifier = Modifier
-                .weight(1f),
+                .weight(1f)
+                .testTag("text:orderCount"),
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold
@@ -78,6 +87,7 @@ fun ItemCounter(
                     .clickable {
                         onItemIncreased(orderId)
                     }
+                    .testTag("text:countIncreased")
             )
         }
     }
