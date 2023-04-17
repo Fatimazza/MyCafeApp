@@ -13,12 +13,16 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -65,6 +69,7 @@ fun DetailScreen(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DetailContent(
     @DrawableRes image: Int,
@@ -73,7 +78,9 @@ fun DetailContent(
     count: Int,
     onBackClick: () -> Unit,
     onAddToCart: (count: Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier.semantics {
+        testTagsAsResourceId = true
+    }
 ) {
     val context = LocalContext.current
 
@@ -98,7 +105,7 @@ fun DetailContent(
                             RoundedCornerShape(
                                 bottomStart = 20.dp, bottomEnd = 20.dp
                             )
-                        )
+                        ).testTag("image:foodDetail")
                 )
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
@@ -106,6 +113,7 @@ fun DetailContent(
                     modifier = Modifier
                         .padding(16.dp)
                         .clickable { onBackClick() }
+                        .testTag("icon:foodDetailBack")
                 )
             }
             Column(
@@ -119,18 +127,24 @@ fun DetailContent(
                     style = MaterialTheme.typography.h5.copy(
                         fontWeight = FontWeight.ExtraBold
                     ),
+                    modifier = Modifier
+                        .testTag("text:foodDetailName")
                 )
                 Text(
                     text = stringResource(R.string.item_price, price),
                     style = MaterialTheme.typography.h6.copy(
                         fontWeight = FontWeight.ExtraBold
                     ),
-                    color = MaterialTheme.colors.secondary
+                    color = MaterialTheme.colors.secondary,
+                    modifier = Modifier
+                        .testTag("text:foodDetailPrice")
                 )
                 Text(
                     text = stringResource(R.string.lorem_ipsum),
                     style = MaterialTheme.typography.body2,
                     textAlign = TextAlign.Justify,
+                    modifier = Modifier
+                        .testTag("text:foodDetailDesc")
                 )
             }
         }
