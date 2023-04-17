@@ -10,9 +10,13 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -110,9 +114,13 @@ private fun shareOrder(context: Context, summary: String) {
     )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun BottomBar(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    modifier: Modifier = Modifier.semantics {
+    testTagsAsResourceId = true
+}
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -121,17 +129,23 @@ private fun BottomBar(
         NavigationItem(
             title = stringResource(R.string.menu_home),
             icon = Icons.Default.Home,
-            screen = Screen.Home
+            screen = Screen.Home,
+            modifier = modifier
+                .testTag("homeNav:home")
         ),
         NavigationItem(
             title = stringResource(R.string.menu_cart),
             icon = Icons.Default.ShoppingCart,
-            screen = Screen.Cart
+            screen = Screen.Cart,
+            modifier = modifier
+                .testTag("homeNav:cart")
         ),
         NavigationItem(
             title = stringResource(R.string.menu_profile),
             icon = Icons.Default.Person,
-            screen = Screen.Profile
+            screen = Screen.Profile,
+            modifier = modifier
+                .testTag("homeNav:about")
         )
     )
 
