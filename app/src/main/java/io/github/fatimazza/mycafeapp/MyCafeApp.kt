@@ -34,10 +34,13 @@ import io.github.fatimazza.mycafeapp.ui.screen.home.HomeScreen
 import io.github.fatimazza.mycafeapp.ui.screen.profile.ProfileScreen
 import io.github.fatimazza.mycafeapp.ui.theme.MyCafeAppTheme
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun MyCafeApp(
     navController: NavHostController = rememberNavController(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier.semantics {
+        testTagsAsResourceId = true
+    }
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -53,7 +56,8 @@ fun MyCafeApp(
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = modifier.padding(innerPadding)
+                .testTag("homeNav:host")
         ) {
             composable(Screen.Home.route) {
                 HomeScreen(
