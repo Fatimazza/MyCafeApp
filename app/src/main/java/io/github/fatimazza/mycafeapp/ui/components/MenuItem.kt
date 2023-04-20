@@ -49,7 +49,7 @@ fun MenuItem(
             painter = painterResource(image),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier
+            modifier = modifier
                 .size(170.dp)
                 .border(
                     BorderStroke(4.dp, MaterialTheme.colors.primary),

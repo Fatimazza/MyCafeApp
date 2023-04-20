@@ -81,8 +81,8 @@ fun HomeContent(
         SearchBar(
             query = query,
             onQueryChange = { viewModel.searchMenu(it, context) },
-            modifier = modifier.background(MaterialTheme.colors.primary)
-                .testTag("searchBar:foodHome")
+            modifier = modifier
+                .background(MaterialTheme.colors.primary)
         )
         AnimatedVisibility(
             visible = searchNotFound
@@ -112,20 +112,23 @@ fun HomeContent(
                     image = data.menu.image,
                     title = data.menu.title,
                     price = data.menu.price,
-                    modifier = Modifier.clickable {
+                    modifier = modifier.clickable {
                         navigateToDetail(data.menu.id)
-                    }
+                    }.testTag("menuItem:foodHome")
                 )
             }
         }
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier.semantics {
+        testTagsAsResourceId = true
+    }
 ) {
     TextField(
         value = query,
@@ -150,6 +153,7 @@ fun SearchBar(
             .fillMaxWidth()
             .heightIn(min = 48.dp)
             .clip(RoundedCornerShape(16.dp))
+            .testTag("searchBar:foodHome")
     )
 }
 
