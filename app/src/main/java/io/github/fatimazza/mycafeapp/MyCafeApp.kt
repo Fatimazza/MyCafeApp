@@ -172,7 +172,9 @@ private fun BottomBar(
                         restoreState = true
                         launchSingleTop = true
                     }
-                }
+                },
+                modifier = modifier
+                    .testTag("bottomNav:host")
             )
         }
     }
