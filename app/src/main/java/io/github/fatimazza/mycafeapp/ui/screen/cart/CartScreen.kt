@@ -79,7 +79,7 @@ fun CartContent(
         TopAppBar(backgroundColor = MaterialTheme.colors.surface) {
             Text(
                 text = stringResource(R.string.menu_cart),
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp)
                     .testTag("text:cartMenu"),
@@ -95,7 +95,7 @@ fun CartContent(
             ),
             enabled = state.orderMenu.isNotEmpty(),
             onClick = { onOrderButtonClicked(shareMessage) },
-            modifier = Modifier.padding(16.dp)
+            modifier = modifier.padding(16.dp)
         )
         LazyColumn(
             contentPadding = PaddingValues(16.dp),
