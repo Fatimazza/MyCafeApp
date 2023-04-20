@@ -114,7 +114,7 @@ fun HomeContent(
                     price = data.menu.price,
                     modifier = modifier.clickable {
                         navigateToDetail(data.menu.id)
-                    }.testTag("menuItem:foodHome")
+                    }
                 )
             }
         }
