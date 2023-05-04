@@ -1,5 +1,6 @@
 package io.github.fatimazza.mycafeapp.ui.screen.cart
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -49,7 +51,8 @@ fun CartScreen(
                     onItemCountChanged = { menuId, count ->
                         viewModel.updateOrderMenu(menuId, count)
                     },
-                    onOrderButtonClicked = onOrderButtonClicked
+                    onOrderButtonClicked = onOrderButtonClicked,
+                    viewModel = viewModel
                 )
             }
             is UiState.Error -> {}
@@ -63,10 +66,12 @@ fun CartContent(
     state: CartState,
     onItemCountChanged: (id: Long, count: Int) -> Unit,
     onOrderButtonClicked: (String) -> Unit,
+    viewModel: CartViewModel,
     modifier: Modifier = Modifier.semantics {
         testTagsAsResourceId = true
     }
 ) {
+    val cartItemNotFound by viewModel.cartItemNotFound
     val shareMessage = stringResource(
         R.string.share_message,
         state.orderMenu.count(),
@@ -97,6 +102,22 @@ fun CartContent(
             onClick = { onOrderButtonClicked(shareMessage) },
             modifier = modifier.padding(16.dp)
         )
+        AnimatedVisibility(
+            visible = cartItemNotFound
+        ) {
+            Row (
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.cart_no_item),
+                    fontSize = 18.sp,
+                    modifier = modifier.testTag("text:noItemFoodCart")
+                )
+            }
+        }
         LazyColumn(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),

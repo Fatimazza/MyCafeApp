@@ -14,6 +14,7 @@
     <string name="share_message">Hey, I have ordered %1$d menu in My Cafe App with total %2$d Rupiah. Do you want too?</string>
     <string name="search_menu">Search menu</string>
     <string name="search_no_result">No search result found</string>
+    <string name="cart_no_item">No item on the Cart</string>
     <string name="food_sushi">Japanese Sushi</string>
     <string name="food_toast">Sunny side up Toast</string>
     <string name="food_pizza">Veggies Pizza</string>

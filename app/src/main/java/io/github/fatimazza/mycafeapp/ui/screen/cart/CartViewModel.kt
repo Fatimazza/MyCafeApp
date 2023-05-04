@@ -1,5 +1,7 @@
 package io.github.fatimazza.mycafeapp.ui.screen.cart
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.fatimazza.mycafeapp.data.MenuRepository
@@ -15,6 +17,9 @@ class CartViewModel(
     val uiState: StateFlow<UiState<CartState>>
         get() = _uiState
 
+    private var _cartItemNotFound = mutableStateOf(false)
+    val cartItemNotFound: State<Boolean> get() = _cartItemNotFound
+
     fun getAddedOrderMenus() {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
@@ -23,6 +28,7 @@ class CartViewModel(
                     val totalPrice =
                         orderMenu.sumOf { it.menu.price * it.count }
                     _uiState.value = UiState.Success(CartState(orderMenu, totalPrice))
+                    _cartItemNotFound.value = orderMenu.isEmpty()
                 }
         }
     }
