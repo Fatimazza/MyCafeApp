@@ -1,5 +1,6 @@
 package io.github.fatimazza.mycafeapp.ui.screen.profile
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -108,17 +109,21 @@ fun ProfileScreen(
                 modifier = modifier.align(Alignment.CenterHorizontally)
                     .testTag("text:AboutDevName")
             )
-            Text(
-                text = context.getString(R.string.developer_email),
-                textAlign = TextAlign.Center,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.h5.copy(
-                    fontWeight = FontWeight.Light
-                ),
-                modifier = modifier.align(Alignment.CenterHorizontally)
-                    .testTag("text:AboutDevEmail")
-            )
+            AnimatedVisibility(
+                visible = false
+            ) {
+                Text(
+                    text = context.getString(R.string.developer_email),
+                    textAlign = TextAlign.Center,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.h5.copy(
+                        fontWeight = FontWeight.Light
+                    ),
+                    modifier = modifier.align(Alignment.CenterHorizontally)
+                        .testTag("text:AboutDevEmail")
+                )
+            }
         }
     }
 }
